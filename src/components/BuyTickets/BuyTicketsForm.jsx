@@ -1,12 +1,14 @@
 import axios from "axios";
 import React, { useState } from "react";
 import styled from "styled-components";
+import SwishLogo from "../../img/swish_logo_secondary.svg";
 
 const getBasicButton = () => `
 	border: none;
 	box-shadow: none;
 	font-size: 4em;
-	background-color: #3ff668;
+	background-color: #1e1e1e;
+	color: #3ff668;
 `;
 
 const FormContainer = styled.div`
@@ -48,28 +50,38 @@ const DecreseButton = styled.button`
 `;
 const PayButton = styled.button`
 	${getBasicButton()}
-	font-size: 1em;
-	text-weight: 500;
 	grid-area: 6 / 1 / 7 / 4;
+	font-size: 1.7em;
+	background-color: #3ff668;
+	color: #1e1e1e;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	font-family: inherit;
+	padding: 8px;
 `;
 
 const TotalCountToHuman = styled.span`
 	font-size: 0.2em;
 	margin: 1em;
 `;
+const NumberInput = styled.input`
+	all: unset;
+	font-size: 1.7em;
+	width: 100%;
+	text-align: center;
+	margin: 0;
+`;
 
 const BuyTicketsForm = ({ event }) => {
 	const [ticketCount, setTicketCount] = useState(0);
-	const [playerTelNr, setPlayerTelNr] = useState("");
-	const [purchaseSuccess, setPurchaseSuccess] = useState(false);
-	const [boughtTickets, setBoughtTickets] = useState([]);
 
 	const handleTicketCountChange = (e) => {
-		setTicketCount(parseInt(e.target.value));
-	};
-
-	const handlePlayerTelNrChange = (e) => {
-		setPlayerTelNr(e.target.value);
+		const newNumber = parseInt(e.target.value);
+		if (newNumber <= 9999 || !newNumber) {
+			setTicketCount(newNumber);
+		}
 	};
 
 	const handleTicketCountClick = (method) => (e) => {
@@ -80,75 +92,63 @@ const BuyTicketsForm = ({ event }) => {
 				? ticketCount - 1
 				: 0;
 
-		setTicketCount(newTicketCount);
+		if (newTicketCount <= 9999) {
+			setTicketCount(newTicketCount);
+		}
 	};
 
 	const handlePayWithSwish = () => {
 		axios
 			.post("/api/player/buy-tickets", {
 				numberOfTickets: ticketCount,
-				playerTelNr,
 				event_id: event._id,
 			})
 			.then((res) => {
-				if (res.data.message === "success") {
-					setPurchaseSuccess(true);
-					setBoughtTickets(res.data.tickets);
+				const { message, paymentToken } = res.data;
+				if (message === "success") {
+					window.location.replace(
+						`swish://paymentrequest?token=${paymentToken}&callbackurl=http%3A%2F%2F192.168.1.232%3A3001%2Fpurchase-success`
+					);
 				}
 			})
 			.catch((err) => {
 				console.error(err);
-				setPurchaseSuccess(false);
 			});
 	};
 
 	return (
-		<div>
-			{!purchaseSuccess ? (
-				<FormContainer>
-					<FormTitle>
-						Välj antal lotter:
-						<FormParagraph>
-							Varje lott kostar {event.ticketPrice} :-
-						</FormParagraph>
-					</FormTitle>
-					<CountContainer>
-						<input
-							type="number"
-							value={ticketCount.toString()}
-							onChange={handleTicketCountChange}
-						/>
-						<TotalCountToHuman>
-							{ticketCount}st lotter kommer kosta dig{" "}
-							{ticketCount * event.ticketPrice} :-
-						</TotalCountToHuman>
-						<input
-							type="number"
-							value={playerTelNr.toString()}
-							onChange={handlePlayerTelNrChange}
-							placeholder="Ange swish nummer"
-						/>
-					</CountContainer>
-					<IncreseButton onClick={handleTicketCountClick("+")}>
-						+
-					</IncreseButton>
-					<DecreseButton onClick={handleTicketCountClick("-")}>
-						-
-					</DecreseButton>
-					<PayButton onClick={handlePayWithSwish}>
-						Betala med Swish
-					</PayButton>
-				</FormContainer>
-			) : (
-				<div>
-					<h1>Tack för ditt köp!</h1>
-					<h1>Dina lotter:</h1>
-					{boughtTickets.map((ticket) => (
-						<h2>{ticket._id}</h2>
-					))}
-				</div>
-			)}
-		</div>
+		<FormContainer>
+			<FormTitle>
+				Välj antal lotter:
+				<FormParagraph>
+					Varje lott kostar {event.ticketPrice} :-
+				</FormParagraph>
+			</FormTitle>
+			<CountContainer>
+				<NumberInput
+					type="number"
+					value={ticketCount.toString()}
+					onChange={handleTicketCountChange}
+				/>
+				<TotalCountToHuman>
+					{ticketCount}st lotter kostar{" "}
+					{ticketCount * event.ticketPrice}:-
+				</TotalCountToHuman>
+			</CountContainer>
+			<IncreseButton onClick={handleTicketCountClick("+")}>
+				+
+			</IncreseButton>
+			<DecreseButton onClick={handleTicketCountClick("-")}>
+				-
+			</DecreseButton>
+			<PayButton onClick={handlePayWithSwish}>
+				<span>Betala med</span>
+				<img
+					src={SwishLogo}
+					style={{ paddingLeft: "16px", height: "32px" }}
+				/>
+			</PayButton>
+		</FormContainer>
 	);
 };
 
