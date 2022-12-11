@@ -5,6 +5,7 @@ const DurationTimer = ({ event }) => {
 	const [days, setDays] = useState(0);
 	const [hours, setHours] = useState();
 	const [minutes, setMinutes] = useState();
+	const [seconds, setSeconds] = useState();
 
 	const updateClock = () => {
 		const newEventTime = moment(event.startDate).unix();
@@ -15,6 +16,7 @@ const DurationTimer = ({ event }) => {
 		const newDaysString = `${duration.days()}`.replace("-", "");
 		const newHoursString = `${duration.hours()}`.replace("-", "");
 		const newMinutesString = `${duration.minutes()}`.replace("-", "");
+		const newSecondsString = `${duration.seconds()}`.replace("-", "");
 
 		const newDays =
 			newDaysString.length === 1 ? "0" + newDaysString : newDaysString;
@@ -24,20 +26,25 @@ const DurationTimer = ({ event }) => {
 			newMinutesString.length === 1
 				? "0" + newMinutesString
 				: newMinutesString;
+		const newSeconds =
+			newSecondsString.length === 1
+				? "0" + newSecondsString
+				: newSecondsString;
 
 		setDays(newDays);
 		setHours(newHours);
 		setMinutes(newMinutes);
+		setSeconds(newSeconds);
 	};
 
 	useEffect(() => {
-		updateClock();
-	}, [event]);
+		setInterval(() => updateClock(), 1000);
+	}, []);
 
 	return (
-		<div>
-			Tid kvar: {days}:{hours}:{minutes}
-		</div>
+		<h1 style={{ textAlign: "center", fontSize: 36 }}>
+			{days}:{hours}:{minutes}:{seconds}
+		</h1>
 	);
 };
 

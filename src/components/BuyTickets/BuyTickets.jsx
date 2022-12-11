@@ -57,17 +57,21 @@ const App = () => {
 			<Logo src={hifLogo} />
 
 			<div>
-				{!event.hasStarted ? (
-					<React.Fragment>
+				{event.hasEnded ? (
+					<div style={{ textAlign: "center" }}>
+						Eventet är avslutat! <br /> Tack för eran support,
+						<br />
+						tillsammans nådde vi {event.pricePool}kr
+					</div>
+				) : event.hasStarted ? (
+					<div>
+						<BuyTicketsForm event={event} />
+					</div>
+				) : event.isReadyToStart ? (
+					<div>
 						{"Eventet har inte startat än!"}
 						<DurationTimer event={event} />
-					</React.Fragment>
-				) : event.hasStarted && !event.hasEnded ? (
-					<React.Fragment>
-						<BuyTicketsForm event={event} />
-					</React.Fragment>
-				) : event.hasEnded ? (
-					<React.Fragment>{"Eventet är avslutat!"}</React.Fragment>
+					</div>
 				) : null}
 			</div>
 		</Container>
