@@ -99,7 +99,7 @@ const BuyTicketsForm = ({ event }) => {
 
 	const handlePayWithSwish = () => {
 		axios
-			.post("/api/player/buy-tickets", {
+			.post("/api/player/pay-with-swish", {
 				numberOfTickets: ticketCount,
 				event_id: event._id,
 			})
