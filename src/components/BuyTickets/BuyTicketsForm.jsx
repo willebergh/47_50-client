@@ -3,78 +3,77 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import SwishLogo from "../../img/swish_logo_secondary.svg";
 
-const getBasicButton = () => `
+const BuyTicketsForm = ({ event }) => {
+	const getBasicButton = () => `
 	border: none;
 	box-shadow: none;
 	font-size: 4em;
-	background-color: #1e1e1e;
-	color: #3ff668;
-`;
-
-const FormContainer = styled.div`
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	grid-template-rows: repeat(6, 1fr);
-	grid-column-gap: 16px;
-	grid-row-gap: 16px;
-	margin: 0 3em 3em;
-`;
-
-const FormTitle = styled.h1`
-	grid-area: 1 / 1 / 2 / 4;
-	font-size: 2.5em;
-	text-align: center;
-`;
-const FormParagraph = styled.p`
-	font-size: 0.4em;
-`;
-
-const CountContainer = styled.span`
-	grid-area: 2 / 1 / 6 / 3;
-	font-size: 5em;
-	display: flex;
-	align-items: center;
-	flex-direction: column;
-	justify-content: center;
-	font-family: inherit;
-	background-color: black;
-	border: 8px #3ff668 solid;
-`;
-const IncreseButton = styled.button`
-	${getBasicButton()}
-	grid-area: 2 / 3 / 4 / 4;
-`;
-const DecreseButton = styled.button`
-	${getBasicButton()}
-	grid-area: 4 / 3 / 6 / 4;
-`;
-const PayButton = styled.button`
-	${getBasicButton()}
-	grid-area: 6 / 1 / 7 / 4;
-	font-size: 1.7em;
-	background-color: #3ff668;
 	color: #1e1e1e;
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	align-items: center;
-	font-family: inherit;
-	padding: 8px;
+	background-color: ${event.color};
 `;
 
-const TotalCountToHuman = styled.span`
-	font-size: 0.2em;
-	margin: 1em;
-`;
-const NumberInput = styled.input`
-	all: unset;
-	font-size: 1.7em;
-	width: 100%;
-	text-align: center;
-	margin: 0;
-`;
+	const FormContainer = styled.div`
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		grid-template-rows: repeat(6, 1fr);
+		grid-column-gap: 16px;
+		grid-row-gap: 16px;
+		margin: 0 3em 3em;
+	`;
 
-const BuyTicketsForm = ({ event }) => {
+	const FormTitle = styled.h1`
+		grid-area: 1 / 1 / 2 / 4;
+		font-size: 2.5em;
+		text-align: center;
+	`;
+	const FormParagraph = styled.p`
+		font-size: 0.4em;
+	`;
+
+	const CountContainer = styled.span`
+		grid-area: 2 / 1 / 6 / 3;
+		font-size: 5em;
+		display: flex;
+		align-items: center;
+		flex-direction: column;
+		justify-content: center;
+		font-family: inherit;
+		background-color: black;
+		border: 8px ${event.color} solid;
+	`;
+	const IncreseButton = styled.button`
+		${getBasicButton()}
+		grid-area: 2 / 3 / 4 / 4;
+	`;
+	const DecreseButton = styled.button`
+		${getBasicButton()}
+		grid-area: 4 / 3 / 6 / 4;
+	`;
+	const PayButton = styled.button`
+		${getBasicButton()}
+		grid-area: 6 / 1 / 7 / 4;
+		font-size: 1.7em;
+		color: #1e1e1e;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		font-family: inherit;
+		padding: 8px;
+	`;
+
+	const TotalCountToHuman = styled.span`
+		font-size: 0.2em;
+		margin: 1em;
+	`;
+	const NumberInput = styled.input`
+		all: unset;
+		font-size: 1.7em;
+		width: 100%;
+		text-align: center;
+		margin: 0;
+	`;
+
 	const [ticketCount, setTicketCount] = useState(0);
 
 	const handleTicketCountChange = (e) => {

@@ -5,7 +5,6 @@ import moment from "moment";
 import DurationTimer from "./DurationTimer";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
-import hifLogo from "./hif-logo.png";
 
 const Container = styled.div`
 	display: flex;
@@ -24,7 +23,7 @@ const Logo = styled.img`
 	font-size: 2em;
 	text-align: center;
 	margin: 2em;
-	width: 160px;
+	height: 200px;
 `;
 
 const App = () => {
@@ -54,7 +53,7 @@ const App = () => {
 				{event.displayName}
 			</Header>
 
-			<Logo src={hifLogo} />
+			<Logo src={event.image} />
 
 			<div>
 				{event.hasEnded ? (
