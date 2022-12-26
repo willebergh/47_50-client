@@ -32,7 +32,7 @@ const App = () => {
 
 	useEffect(() => {
 		axios
-			.get(`/api/player/event/${event_id}`)
+			.get(`/api/client/event/${event_id}`)
 			.then((res) => {
 				setEvent(res.data.event);
 			})

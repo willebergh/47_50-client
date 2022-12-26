@@ -98,15 +98,15 @@ const BuyTicketsForm = ({ event }) => {
 
 	const handlePayWithSwish = () => {
 		axios
-			.post("/api/player/pay-with-swish", {
+			.post("/api/client/start-payment", {
 				numberOfTickets: ticketCount,
 				event_id: event._id,
 			})
 			.then((res) => {
-				const { message, paymentToken } = res.data;
+				const { message, paymentId } = res.data;
 				if (message === "success") {
 					window.location.replace(
-						`swish://paymentrequest?token=${paymentToken}&callbackurl=http%3A%2F%2F192.168.1.232%3A3001%2Fpurchase-success`
+						`swish://paymentrequest?token=${paymentId}&callbackurl=http%3A%2F%2F192.168.1.232%3A3001%2Fpurchase-success`
 					);
 				}
 			})
