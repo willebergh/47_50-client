@@ -8,39 +8,12 @@ const BuyTicketsForm = ({ event }) => {
 	border: none;
 	box-shadow: none;
 	font-size: 4em;
-	color: #1e1e1e;
+	color: ${event.secondary};
 	background-color: ${event.color};
-`;
-
-	const FormContainer = styled.div`
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		grid-template-rows: repeat(6, 1fr);
-		grid-column-gap: 16px;
-		grid-row-gap: 16px;
-		margin: 0 3em 3em;
 	`;
 
-	const FormTitle = styled.h1`
-		grid-area: 1 / 1 / 2 / 4;
-		font-size: 2.5em;
-		text-align: center;
-	`;
-	const FormParagraph = styled.p`
-		font-size: 0.4em;
-	`;
+	const FormContainer = styled.div``;
 
-	const CountContainer = styled.span`
-		grid-area: 2 / 1 / 6 / 3;
-		font-size: 5em;
-		display: flex;
-		align-items: center;
-		flex-direction: column;
-		justify-content: center;
-		font-family: inherit;
-		background-color: black;
-		border: 8px ${event.color} solid;
-	`;
 	const IncreseButton = styled.button`
 		${getBasicButton()}
 		grid-area: 2 / 3 / 4 / 4;
@@ -60,18 +33,6 @@ const BuyTicketsForm = ({ event }) => {
 		align-items: center;
 		font-family: inherit;
 		padding: 8px;
-	`;
-
-	const TotalCountToHuman = styled.span`
-		font-size: 0.2em;
-		margin: 1em;
-	`;
-	const NumberInput = styled.input`
-		all: unset;
-		font-size: 1.7em;
-		width: 100%;
-		text-align: center;
-		margin: 0;
 	`;
 
 	const [ticketCount, setTicketCount] = useState(0);
