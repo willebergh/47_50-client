@@ -6,6 +6,7 @@ import EventLayout from "./layouts/EventLayout";
 import BuyTicketsPage from "./pages/BuyTicketsPage";
 import EventEndingPage from "./pages/EventEndingPage";
 import EventCountDownPage from "./pages/EventCountDownPage";
+import PurchaseSuccessPage from "./pages/PurchaseSuccessPage";
 
 import NotFound404Page from "./pages/NotFound404Page";
 
@@ -30,6 +31,10 @@ export const eventRoutes = {
 
 export const allRoutes = [
 	eventRoutes,
+	{
+		path: "/purchase-success",
+		element: <PurchaseSuccessPage />,
+	},
 	{
 		path: "*",
 		element: <NotFound404Page />,
