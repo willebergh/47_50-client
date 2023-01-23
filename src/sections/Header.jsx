@@ -1,12 +1,30 @@
 import React from "react";
 import styled from "styled-components";
+import { Title, SubTitle } from "./Title";
 
 const Container = styled.div`
 	width: 100%;
-	padding: 32px;
 	display: flex;
 	flex-direction: column;
 	box-sizing: border-box;
+	padding-bottom: 32px;
+
+	&:after {
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		opacity: 0.1;
+		z-index: -10;
+		content: " ";
+		display: block;
+		filter: blur(4px);
+		position: absolute;
+		background-size: 600px;
+		background-position: top 32px left 32px;
+		background-repeat: no-repeat;
+		background-image: url("${(props) => props.image}");
+	}
 `;
 
 const OrgContainer = styled.div`
@@ -16,20 +34,9 @@ const OrgContainer = styled.div`
 	align-self: center;
 `;
 
-const Title = styled.h1`
-	font-weight: 800;
-	font-size: 40px;
-	color: #f4f6f8;
-`;
-const SubTitle = styled.h2`
-	font-weight: 800;
-	font-size: 20px;
-	color: #637381;
-`;
-
 export default function Header({ eventData }) {
 	return (
-		<Container>
+		<Container image={eventData.image}>
 			<Title>{eventData?.displayName}</Title>
 			<SubTitle>Presenteras av:</SubTitle>
 
