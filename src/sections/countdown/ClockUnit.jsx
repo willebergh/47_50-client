@@ -41,6 +41,7 @@ export default function ClockUnit({
 	label = "00",
 	mainColor = "#2192FF",
 	secondaryColor = "#171717",
+	animationDuration = 1000,
 }) {
 	const trackWidth = 6;
 	const indicatorWidth = 8;
@@ -58,7 +59,7 @@ export default function ClockUnit({
 				targets: indicatorRef.current,
 				strokeDashoffset: [offsetTarget],
 				easing: "linear",
-				duration: 1020,
+				duration: animationDuration,
 				loop: false,
 			});
 		}

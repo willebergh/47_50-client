@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 import Ticket from "../sections/BuyTickets/Ticket";
 import DecreaseButton from "../sections/BuyTickets/DecreaseButton";
@@ -32,7 +33,13 @@ export default function BuyTicketsPage() {
 	};
 
 	const handleSubmit = () => {
-		console.log(numberOfTicketsCount);
+		axios
+			.post("/api/client/start-payment", {
+				event_id: eventData._id,
+				numberOfTickets: numberOfTicketsCount,
+			})
+			.then((res) => console.log(res.data))
+			.catch((err) => console.error(err));
 	};
 
 	return (

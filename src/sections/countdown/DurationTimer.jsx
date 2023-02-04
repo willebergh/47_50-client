@@ -16,27 +16,33 @@ const DurationTimer = ({ eventData }) => {
 	const [hours, setHours] = useState(0);
 	const [minutes, setMinutes] = useState(0);
 	const [seconds, setSeconds] = useState(0);
+	const [milliseconds, setMilliSeconds] = useState(0);
 
 	const updateClock = () => {
-		const newEventTime = moment(eventData.startDate).unix();
-		const newCurrentTime = moment().unix();
+		const newEventTime = moment(eventData.startDate).valueOf();
+		const newCurrentTime = moment().valueOf();
 		const newDiffTime = newCurrentTime - newEventTime;
-		const duration = moment.duration(newDiffTime, "seconds");
+		const duration = moment.duration(newDiffTime, "milliseconds");
 
 		const newDaysString = `${duration.days()}`.replace("-", "");
 		const newHoursString = `${duration.hours()}`.replace("-", "");
 		const newMinutesString = `${duration.minutes()}`.replace("-", "");
 		const newSecondsString = `${duration.seconds()}`.replace("-", "");
+		const newMilliSecondsString = `${duration.milliseconds()}`.replace(
+			"-",
+			""
+		);
 
 		setDays(parseInt(newDaysString));
 		setHours(parseInt(newHoursString));
 		setMinutes(parseInt(newMinutesString));
 		setSeconds(parseInt(newSecondsString));
+		setMilliSeconds(parseInt(newMilliSecondsString));
 	};
 
 	useEffect(() => {
 		if (Boolean(eventData)) {
-			setInterval(updateClock, 1000);
+			setInterval(updateClock, 10);
 		}
 	}, [eventData]);
 
@@ -46,7 +52,8 @@ const DurationTimer = ({ eventData }) => {
 				<ClockUnit
 					title="dagar"
 					label={days}
-					progress={(parseInt(days) / 31) * 100}
+					progress={(hours / 24) * 100}
+					animationDuration={1020}
 					mainColor={eventData?.color}
 					secondaryColor={eventData?.secondaryColor}
 				/>
@@ -54,22 +61,35 @@ const DurationTimer = ({ eventData }) => {
 			<ClockUnit
 				title="timmar"
 				label={hours}
-				progress={(parseInt(hours) / 24) * 100}
+				progress={(minutes / 60) * 100}
+				animationDuration={1020}
 				mainColor={eventData?.color}
 				secondaryColor={eventData?.secondaryColor}
 			/>
 			<ClockUnit
 				title="minuter"
 				label={minutes}
-				progress={(parseInt(minutes) / 60) * 100}
+				progress={(seconds / 60) * 100}
+				animationDuration={1020}
 				mainColor={eventData?.color}
 				secondaryColor={eventData?.secondaryColor}
 			/>
 			{!Boolean(days) && (
 				<ClockUnit
 					title="sekunder"
+					animationDuration={12}
 					label={seconds}
-					progress={(parseInt(seconds) / 60) * 100}
+					progress={milliseconds / 10}
+					mainColor={eventData?.color}
+					secondaryColor={eventData?.secondaryColor}
+				/>
+			)}
+			{!Boolean(days) && !Boolean(hours) && (
+				<ClockUnit
+					title="millisekunder"
+					animationDuration={102}
+					label={milliseconds}
+					progress={100}
 					mainColor={eventData?.color}
 					secondaryColor={eventData?.secondaryColor}
 				/>
