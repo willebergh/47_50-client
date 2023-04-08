@@ -32,9 +32,10 @@ export const eventRoutes = {
 export const allRoutes = [
 	eventRoutes,
 	{
-		path: "/purchase-success",
+		path: "purchase-success/:paymentId",
 		element: <PurchaseSuccessPage />,
 	},
+
 	{
 		path: "*",
 		element: <NotFound404Page />,

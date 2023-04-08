@@ -42,6 +42,7 @@ export default function EvnetLayout() {
 	}, []);
 
 	useEffect(() => {
+		return;
 		if (!Boolean(eventData)) return;
 
 		if (eventData.hasEnded) {

@@ -6,14 +6,14 @@ import anime from "animejs";
 const clockUnitSize = 100;
 
 const SVGPIWrapper = styled.div`
-	width: ${clockUnitSize}px;
-	height: ${clockUnitSize}px;
+	width: ${(props) => props.clockUnitSize}px;
+	height: ${(props) => props.clockUnitSize}px;
 	position: relative;
 `;
 
 const SVGPI = styled.svg`
-	width: ${clockUnitSize}px;
-	height: ${clockUnitSize}px;
+	width: ${(props) => props.clockUnitSize}px;
+	height: ${(props) => props.clockUnitSize}px;
 	transform: rotate(90deg);
 `;
 
@@ -42,9 +42,10 @@ export default function ClockUnit({
 	mainColor = "#2192FF",
 	secondaryColor = "#171717",
 	animationDuration = 1000,
+	trackWidth = 6,
+	indicatorWidth = 8,
+	clockUnitSize = 100,
 }) {
-	const trackWidth = 6;
-	const indicatorWidth = 8;
 	const center = clockUnitSize / 2;
 	const radius =
 		center - (trackWidth > indicatorWidth ? trackWidth : indicatorWidth);
@@ -66,8 +67,8 @@ export default function ClockUnit({
 	}, [progress]);
 
 	return (
-		<SVGPIWrapper>
-			<SVGPI>
+		<SVGPIWrapper clockUnitSize={clockUnitSize}>
+			<SVGPI clockUnitSize={clockUnitSize}>
 				<circle
 					cx={center}
 					cy={center}
